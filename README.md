@@ -15,5 +15,4 @@ Tema 6 - Central de chamadas e manuntenção
 MODELO CONCEITUAL:
 
 
-
-<img width="475" height="305" alt="image" src="https://github.com/user-attachments/assets/d7402ef0-e232-4222-b273-830245df8b85" />
+<img width="762" height="535" alt="image" src="https://github.com/user-attachments/assets/92669aa2-1f47-41ed-a197-b5ea3c54cdde" />
