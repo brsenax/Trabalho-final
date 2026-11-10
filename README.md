@@ -25,4 +25,5 @@ DIAGRAMA DE CLASSES:
 
 MODELO LOGICO: 
 
-<img width="1011" height="704" alt="image" src="https://github.com/user-attachments/assets/a832c911-e44c-4cc9-bc5e-79d418039a80" />
+<img width="962" height="631" alt="image" src="https://github.com/user-attachments/assets/e4362c7c-2a33-43ee-9877-c83cdc417802" />
+
