@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class Chamado {
     descricao: string;
     id: number;
@@ -13,5 +15,9 @@ export class Chamado {
             this.id = id;
             this.prioridade = prioridade;
             this.data_abertura = data_abertura
+        }
+
+        solicitar_chamado(nome: string, id_user: number): void {
+            throw new Error('buteco')
         }
 }
