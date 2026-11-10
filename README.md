@@ -20,3 +20,7 @@ MODELO CONCEITUAL:
 
 DIAGRAMA DE CLASSES:
 
+
+<img width="1430" height="772" alt="image" src="https://github.com/user-attachments/assets/37007703-f131-4d7a-8b68-46eb5be7997a" />
+
+
