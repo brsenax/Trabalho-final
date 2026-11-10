@@ -23,4 +23,6 @@ DIAGRAMA DE CLASSES:
 
 <img width="1430" height="772" alt="image" src="https://github.com/user-attachments/assets/37007703-f131-4d7a-8b68-46eb5be7997a" />
 
+MODELO LOGICO: 
 
+<img width="1011" height="704" alt="image" src="https://github.com/user-attachments/assets/a832c911-e44c-4cc9-bc5e-79d418039a80" />
