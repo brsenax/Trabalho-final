@@ -1,0 +1,213 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f4f6f9;
+  color: #333;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+/* Menu de abas */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.menu button {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #475569;
+}
+
+.menu button.ativa {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+}
+
+/* Layout: duas colunas (vira uma só no celular) */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+/* Formulários */
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #475569;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+input[type='checkbox'] {
+  width: auto;
+  margin-right: 6px;
+}
+
+.btn-primary {
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-secundario {
+  background: #e2e8f0;
+  color: #334155;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.btn-secundario:hover {
+  background: #cbd5e1;
+}
+
+.erro {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+/* Chamados */
+.chamado-item {
+  border-left: 4px solid #2563eb;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #f8fafc;
+  border-radius: 0 8px 8px 0;
+}
+
+.chamado-item.atrasado {
+  border-left-color: #dc2626;
+}
+
+.chamado-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+.prioridade-baixa { background: #dcfce7; color: #15803d; }
+.prioridade-media { background: #fef9c3; color: #a16207; }
+.prioridade-alta { background: #fee2e2; color: #b91c1c; }
+
+.status-aberto { background: #dbeafe; color: #1d4ed8; }
+.status-em_atendimento { background: #ede9fe; color: #6d28d9; }
+.status-aguardando_peca { background: #ffedd5; color: #c2410c; }
+.status-concluido { background: #dcfce7; color: #15803d; }
+
+.texto-pequeno {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.texto-atrasado {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.bloco {
+  border-top: 1px solid #e2e8f0;
+  margin-top: 15px;
+  padding-top: 15px;
+}
+
+.andamento {
+  border-left: 3px solid #cbd5e1;
+  padding: 4px 0 10px 12px;
+  font-size: 14px;
+}
+
+/* Tabelas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
