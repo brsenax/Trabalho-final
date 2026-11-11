@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --azul: #2563eb;
+  --azul-escuro: #172554;
+  --fundo: #f3f6fb;
+  --texto: #1e293b;
+  --cinza: #64748b;
+}
+
+body { background: var(--fundo); color: var(--texto); min-height: 100vh; }
+button, input { font: inherit; }
+
+/* LOGIN */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #eaf1ff, #f8fafc);
+}
+.login-card {
+  width: 100%;
+  max-width: 390px;
+  background: white;
+  padding: 38px;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px #1e293b18;
+}
+.logo {
+  width: 48px; height: 48px; border-radius: 13px;
+  display: grid; place-items: center;
+  color: white; background: var(--azul);
+  font-size: 23px; font-weight: bold; margin-bottom: 22px;
+}
+.login-card h1 { font-size: 25px; margin-bottom: 8px; }
+.subtitulo { color: var(--cinza); margin-bottom: 28px; line-height: 1.5; }
+.campo { margin-bottom: 18px; }
+.campo label { display: block; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+.campo input {
+  width: 100%; padding: 13px 14px; border: 1px solid #cbd5e1;
+  border-radius: 8px; outline: none;
+}
+.campo input:focus { border-color: var(--azul); box-shadow: 0 0 0 3px #2563eb18; }
+.botao {
+  border: 0; background: var(--azul); color: white;
+  padding: 13px 18px; border-radius: 8px; cursor: pointer; font-weight: bold;
+}
+.botao:hover { background: #1d4ed8; }
+.login-card .botao { width: 100%; margin-top: 5px; }
+.erro { color: #dc2626; font-size: 13px; min-height: 18px; margin: 10px 0; }
+.dica { margin-top: 20px; color: var(--cinza); font-size: 12px; text-align: center; }
+
+/* PAINEL */
+.layout { min-height: 100vh; display: flex; }
+.sidebar {
+  width: 245px; background: var(--azul-escuro); color: white;
+  padding: 25px 18px; flex-shrink: 0;
+}
+.marca { display: flex; align-items: center; gap: 11px; font-size: 18px; font-weight: bold; margin: 4px 8px 42px; }
+.marca-icone { background: var(--azul); padding: 9px; border-radius: 9px; }
+.menu-titulo { color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin: 0 10px 12px; }
+.menu a {
+  display: block; color: #cbd5e1; text-decoration: none;
+  padding: 12px 13px; border-radius: 8px; margin-bottom: 5px; font-size: 14px;
+}
+.menu a.ativo, .menu a:hover { color: white; background: #ffffff18; }
+.conteudo { flex: 1; min-width: 0; }
+.topo {
+  background: white; padding: 19px 32px; display: flex;
+  justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0;
+}
+.usuario { color: var(--cinza); font-size: 14px; }
+.pagina { padding: 32px; max-width: 1200px; margin: auto; }
+.pagina h1 { font-size: 26px; margin-bottom: 8px; }
+.descricao { color: var(--cinza); margin-bottom: 27px; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 28px; }
+.card {
+  background: white; border: 1px solid #e5eaf2; border-radius: 12px;
+  padding: 22px; box-shadow: 0 3px 12px #0f172a08;
+}
+.card-titulo { color: var(--cinza); font-size: 13px; margin-bottom: 13px; }
+.card-numero { font-size: 30px; font-weight: bold; }
+.card-detalhe { color: var(--cinza); font-size: 12px; margin-top: 7px; }
+.secao-titulo { font-size: 18px; margin-bottom: 15px; }
+.tabela { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
+.tabela th, .tabela td { padding: 16px; text-align: left; border-bottom: 1px solid #edf0f5; font-size: 13px; }
+.tabela th { color: var(--cinza); background: #f8fafc; font-weight: bold; }
+.status { display: inline-block; background: #fff7ed; color: #c2410c; padding: 6px 10px; border-radius: 20px; font-size: 11px; }
+.sair { background: transparent; border: 1px solid #cbd5e1; color: var(--texto); padding: 9px 13px; border-radius: 7px; cursor: pointer; }
+@media (max-width: 760px) {
+  .layout { display: block; }
+  .sidebar { width: 100%; padding: 15px; }
+  .marca { margin: 0 5px 15px; }
+  .menu { display: flex; gap: 5px; flex-wrap: wrap; }
+  .menu-titulo { display: none; }
+  .menu a { margin: 0; }
+  .topo { padding: 16px 20px; }
+  .pagina { padding: 22px 16px; }
+  .cards { grid-template-columns: 1fr; }
+  .tabela { display: block; overflow-x: auto; white-space: nowrap; }
+}
