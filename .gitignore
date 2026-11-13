@@ -1,0 +1,16 @@
+# Dependências do Node
+node_modules/
+
+# Arquivos gerados pelo TypeScript / Compilação
+dist/
+build/
+*.tsbuildinfo
+
+# Arquivos de ambiente locais (para futuras senhas e configs do banco)
+.env
+.env.local
+
+# Arquivos do sistema operacional e IDE
+.DS_Store
+Thumbs.db
+.vscode/
