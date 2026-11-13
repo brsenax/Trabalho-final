@@ -1,0 +1,33 @@
+{
+  "name": "trabalho-final",
+  "version": "1.0.0",
+  "description": "1. Bruno Sena 2. Davi Protásio 3. Arthur Uemoto",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "vite",
+    "check": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brsenax/Trabalho-final.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brsenax/Trabalho-final/issues"
+  },
+  "homepage": "https://github.com/brsenax/Trabalho-final#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "typescript": "^7.0.2",
+    "vite": "^5.4.21"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.24.6"
+  }
+}
