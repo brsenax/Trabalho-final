@@ -1,0 +1,9 @@
+/* ===== LOGO ManuTech (adicione no FINAL do css/style.css) ===== */
+.logo-svg { display: block; flex-shrink: 0; }
+.logo-marca { display: inline-flex; align-items: center; gap: 11px; }
+.logo-nome { font-size: 22px; font-weight: bold; letter-spacing: -0.5px; color: var(--azul-escuro); }
+.logo-nome span { color: var(--azul); }
+.logo-marca--clara .logo-nome { color: #fff; }
+.logo-marca--clara .logo-nome span { color: #60a5fa; }
+.login-logo { margin-bottom: 20px; }
+.login-card h1 .azul { color: var(--azul); }
