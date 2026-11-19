@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "vite",
+    "server": "npx tsx server/server.ts",
     "check": "tsc --noEmit"
   },
   "repository": {
@@ -21,11 +22,13 @@
   },
   "homepage": "https://github.com/brsenax/Trabalho-final#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "typescript": "^7.0.2",
     "vite": "^5.4.21"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.3.0",
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.24.6"
