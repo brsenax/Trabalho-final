@@ -1,12 +1,12 @@
 import { AuthService } from "../services/authService.js";
 import { UsuarioRepository } from "../repositories/usuarioRepository.js";
-import { mostrarLogin } from "../views/loginView.js";
+import { initLoginView } from "../views/loginView.js";
 import { mostrarPainel } from "../views/dashboardView.js";
 
 const authService = new AuthService(new UsuarioRepository());
 
 export function iniciarAplicacao(app: HTMLElement): void {
-  mostrarLogin(app);
+  initLoginView();
 
   const formulario = document.querySelector("#form-login") as HTMLFormElement | null;
   if (!formulario) return;

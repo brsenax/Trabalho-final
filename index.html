@@ -3,11 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manutenção | Chamados</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Login - Sistema de Chamados</title>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-  <main id="app"></main>
-  <script type="module" src="/mvc/main.ts"></script>
+  <!-- Elemento raiz procurado pelo main.ts -->
+  <div id="app">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="logo-box">M</div>
+        <h1 id="titulo-card">Bem-vindo</h1>
+        <p id="subtitulo-card">Entre no sistema de chamados de manutenção.</p>
+
+        <!-- Formulário de Login -->
+        <form id="form-login">
+          <div class="form-group">
+            <label for="email">Usuário / E-mail</label>
+            <input type="email" id="email" placeholder="Digite seu e-mail" required />
+          </div>
+
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" placeholder="Digite sua senha" required />
+            <div style="text-align: right; margin-top: 6px;">
+              <a href="#" id="link-esqueceu-senha" style="font-size: 0.85rem; color: #2563eb; text-decoration: none;">
+                Esqueceu a senha?
+              </a>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">Entrar no sistema</button>
+        </form>
+
+        <!-- Formulário de Recuperação de Senha (Oculto por padrão) -->
+        <form id="form-recuperar" style="display: none;">
+          <div class="form-group">
+            <label for="rec-email">E-mail cadastrado</label>
+            <input type="email" id="rec-email" placeholder="Digite seu e-mail" required />
+          </div>
+
+          <div class="form-group">
+            <label for="rec-nova-senha">Nova Senha</label>
+            <input type="password" id="rec-nova-senha" placeholder="Digite a nova senha" required />
+          </div>
+
+          <button type="submit" class="btn-primary">Redefinir senha</button>
+          <div style="text-align: center; margin-top: 12px;">
+            <a href="#" id="link-voltar-login" style="font-size: 0.85rem; color: #64748b; text-decoration: none;">
+              Voltar para o login
+            </a>
+          </div>
+        </form>
+
+        <p id="mensagem-feedback" style="margin-top: 12px; font-size: 0.9rem; text-align: center;"></p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./mvc/main.ts"></script>
 </body>
 </html>

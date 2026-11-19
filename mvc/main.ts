@@ -1,10 +1,14 @@
+import { initLoginView } from "./views/loginView.js";
 import { iniciarAplicacao } from "./controllers/appController.js";
 
-// Ponto de entrada: encontra a área principal e inicia o sistema.
-const app = document.querySelector("#app") as HTMLElement | null;
+// Ponto de entrada da aplicação
+document.addEventListener("DOMContentLoaded", () => {
+  const app = document.querySelector("#app") as HTMLElement | null;
 
-if (app) {
-  iniciarAplicacao(app);
-} else {
-  console.error("Elemento principal #app não foi encontrado no DOM.");
-}
+  if (app) {
+    iniciarAplicacao(app);
+  } else {
+    // Fallback de segurança: inicializa a view de login diretamente caso o #app não exista no HTML
+    initLoginView();
+  }
+});

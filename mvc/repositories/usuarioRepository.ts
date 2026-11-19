@@ -11,4 +11,17 @@ export class UsuarioRepository {
       usuario => usuario.email === email && usuario.senha === senha
     );
   }
+
+  public atualizarSenha(email: string, novaSenha: string): boolean {
+    const usuario = this.usuarios.find(
+      u => u.email.toLowerCase() === email.toLowerCase()
+    );
+
+    if (!usuario) {
+      return false;
+    }
+
+    usuario.senha = novaSenha;
+    return true;
+  }
 }
