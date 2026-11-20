@@ -1,38 +1,25 @@
-import { AuthService } from "../services/authService.js";
-import { UsuarioRepository } from "../repositories/usuarioRepository.js";
 import { initLoginView } from "../views/loginView.js";
 import { mostrarPainel } from "../views/dashboardView.js";
 
-const authService = new AuthService(new UsuarioRepository());
-
 export function iniciarAplicacao(app: HTMLElement): void {
-  initLoginView();
+  // Verifica se já existe um usuário logado
+  const usuarioLogadoStr = localStorage.getItem("usuarioLogado");
 
-  const formulario = document.querySelector("#form-login") as HTMLFormElement | null;
-  if (!formulario) return;
-
-  formulario.addEventListener("submit", (evento: SubmitEvent) => {
-    evento.preventDefault();
-
-    const inputUsuario = document.querySelector("#usuario") as HTMLInputElement | null;
-    const inputSenha = document.querySelector("#senha") as HTMLInputElement | null;
-    const mensagemErro = document.querySelector("#mensagem-erro") as HTMLElement | null;
-
-    const email = inputUsuario?.value ?? "";
-    const senha = inputSenha?.value ?? "";
-    const usuario = authService.autenticar(email, senha);
-
-    if (usuario) {
-      mostrarPainel(app, usuario.nome);
-      configurarBotaoSair(app);
-    } else if (mensagemErro) {
-      mensagemErro.textContent = "Usuário ou senha incorretos.";
-    }
-  });
+  if (usuarioLogadoStr) {
+    const usuario = JSON.parse(usuarioLogadoStr);
+    mostrarPainel(app, usuario.nome);
+    configurarBotaoSair(app);
+  } else {
+    // Apenas inicializa os eventos da tela de login que já está no index.html
+    initLoginView();
+  }
 }
 
 function configurarBotaoSair(app: HTMLElement): void {
   const botaoSair = document.querySelector("#botao-sair") as HTMLButtonElement | null;
 
-  botaoSair?.addEventListener("click", () => iniciarAplicacao(app));
+  botaoSair?.addEventListener("click", () => {
+    localStorage.removeItem("usuarioLogado");
+    window.location.reload();
+  });
 }
