@@ -16,7 +16,8 @@ MODELO CONCEITUAL:
 
 
 
-<img width="1002" height="722" alt="image" src="https://github.com/user-attachments/assets/f60c36eb-c64c-4d1a-bb91-f92e00112cd4" />
+<img width="715" height="514" alt="image" src="https://github.com/user-attachments/assets/c7ec7307-246f-4411-aeb3-e35657abe58b" />
+
 
 DIAGRAMA DE CLASSES:
 
@@ -25,5 +26,6 @@ DIAGRAMA DE CLASSES:
 
 MODELO LOGICO: 
 
-<img width="962" height="631" alt="image" src="https://github.com/user-attachments/assets/e4362c7c-2a33-43ee-9877-c83cdc417802" />
+<img width="635" height="565" alt="image" src="https://github.com/user-attachments/assets/835581c7-97dd-422c-ba4a-4c3ebd09b36f" />
+
 
