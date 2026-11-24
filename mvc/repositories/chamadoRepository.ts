@@ -1,17 +1,18 @@
 import { Chamado } from "../../src/entities/chamado.js";
 
 export class ChamadoRepository {
-  private chamados: Chamado[] = [];
+  // O 'static' garante que a lista seja compartilhada em toda a aplicação
+  private static chamados: Chamado[] = [];
 
   public salvar(chamado: Chamado): void {
-    this.chamados.push(chamado);
+    ChamadoRepository.chamados.push(chamado);
   }
 
   public listar(): Chamado[] {
-    return [...this.chamados];
+    return [...ChamadoRepository.chamados];
   }
 
   public buscarPorId(id: number): Chamado | undefined {
-    return this.chamados.find(chamado => chamado.id === id);
+    return ChamadoRepository.chamados.find((chamado) => chamado.id === id);
   }
 }

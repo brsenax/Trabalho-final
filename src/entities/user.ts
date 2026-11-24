@@ -12,4 +12,12 @@ export class User {
         this.email = email;
         this.senha = senha;
     }
+
+    validarSenha(senhaInformada: string) : boolean {
+        return this.senha === senhaInformada;
+    }
+
+    obterResumo(): string {
+        return `${this.nome} (${this.email})`;
+    }
 }

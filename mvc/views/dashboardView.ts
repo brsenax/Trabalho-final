@@ -1,5 +1,15 @@
-// View: monta a tela principal. Os chamados abaixo são exemplos visuais.
+import { ChamadoRepository } from "../repositories/chamadoRepository.js";
+
 export function mostrarPainel(app: HTMLElement, nomeUsuario: string): void {
+  const repo = new ChamadoRepository();
+  const todosOsChamados = repo.listar();
+
+  // Cálculos dinâmicos baseados nas instâncias reais
+  const totalChamados = todosOsChamados.length;
+  // Exemplo de contagem para status (ajuste conforme a regra de negócio da sua classe)
+  const emAndamento = todosOsChamados.filter(c => c.prioridade === "Alta" || c.descricao).length; 
+  const concluidos = 0; // Você pode ajustar conforme implementar o status de conclusão
+
   app.innerHTML = `
     <div class="layout">
       <aside class="sidebar">
@@ -29,17 +39,17 @@ export function mostrarPainel(app: HTMLElement, nomeUsuario: string): void {
           <section class="cards">
             <article class="card">
               <p class="card-titulo">Total de chamados</p>
-              <p class="card-numero">24</p>
+              <p class="card-numero">${totalChamados}</p>
               <p class="card-detalhe">Solicitações registradas</p>
             </article>
             <article class="card">
               <p class="card-titulo">Em andamento</p>
-              <p class="card-numero">08</p>
+              <p class="card-numero">${emAndamento}</p>
               <p class="card-detalhe">Precisam de atenção</p>
             </article>
             <article class="card">
               <p class="card-titulo">Concluídos</p>
-              <p class="card-numero">16</p>
+              <p class="card-numero">${concluidos}</p>
               <p class="card-detalhe">Serviços finalizados</p>
             </article>
           </section>
@@ -47,12 +57,21 @@ export function mostrarPainel(app: HTMLElement, nomeUsuario: string): void {
           <h2 class="secao-titulo">Chamados recentes</h2>
           <table class="tabela">
             <thead>
-              <tr><th>Nº</th><th>Solicitante</th><th>Problema</th><th>Setor</th><th>Status</th></tr>
+              <tr><th>Nº</th><th>Descrição</th><th>Prioridade</th><th>Data</th></tr>
             </thead>
             <tbody>
-              <tr><td>#001</td><td>Maria Silva</td><td>Computador não liga</td><td>Administrativo</td><td><span class="status">Em andamento</span></td></tr>
-              <tr><td>#002</td><td>João Santos</td><td>Problema na impressora</td><td>Financeiro</td><td><span class="status">Em andamento</span></td></tr>
-              <tr><td>#003</td><td>Ana Costa</td><td>Instalação de programa</td><td>Recepção</td><td><span class="status">Em andamento</span></td></tr>
+              ${
+                todosOsChamados.length === 0 
+                ? `<tr><td colspan="4" style="text-align: center; color: #64748b; padding: 20px;">Nenhum chamado cadastrado ainda.</td></tr>`
+                : todosOsChamados.map(c => `
+                    <tr>
+                      <td>#${c.id}</td>
+                      <td>${c.descricao}</td>
+                      <td>${c.prioridade}</td>
+                      <td>${c.obterDataFormatada()}</td>
+                    </tr>
+                  `).join("")
+              }
             </tbody>
           </table>
         </main>

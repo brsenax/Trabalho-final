@@ -15,4 +15,16 @@ export class Chamado {
     this.prioridade = prioridade;
     this.data_abertura = data_abertura;
   }
+
+  alterarPrioridade(novaPrioridade: string) : void {
+    this.prioridade = novaPrioridade;
+  }
+
+  obterDataFormatada(): string {
+    const data = new Date(this.data_abertura);
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+  }
 }
