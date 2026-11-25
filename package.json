@@ -5,10 +5,11 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "vite",
-    "server": "npx tsx server/server.ts",
-    "check": "tsc --noEmit"
+    "server": "tsx server/server.ts",
+    "dev:server": "tsx watch server/server.ts",
+    "build": "vite build",
+    "check": "tsc -p server --noEmit && tsc -p web --noEmit"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,9 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
     "typescript": "^7.0.2",
     "vite": "^5.4.21"
   },
