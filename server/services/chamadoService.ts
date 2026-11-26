@@ -1,81 +1,92 @@
 import { Chamado, PRIORIDADES, type Prioridade } from "../entities/chamado.js";
+import type { ChamadoDetalhado } from "../entities/chamado.js";
 import type { ChamadoRepository } from "../repositories/chamadoRepository.js";
-import type { UsuarioRepository } from "../repositories/usuarioRepository.js";
+import type { SetorRepository } from "../repositories/setorRepository.js";
+import type { CategoriaRepository } from "../repositories/categoriaRepository.js";
 import { ErroDeValidacao } from "../errors.js";
 
 export interface NovoChamado {
+  titulo: string;
   descricao: string;
-  setor: string;
+  setorId: number;
+  categoriaId: number;
   prioridade?: string;
 }
 
 export interface ResumoChamados {
   total: number;
   abertos: number;
-  emAndamento: number;
+  emAtendimento: number;
+  aguardandoPeca: number;
   concluidos: number;
   porPrioridade: Record<Prioridade, number>;
 }
 
-/** Chamado + nome de quem abriu (usado no dashboard do administrador). */
-export type ChamadoDetalhado = Omit<Chamado, "alterarPrioridade" | "obterDataFormatada"> & { solicitante: string };
+// Prazo de atendimento em horas, por prioridade (regra de negócio: a equipe pode ajustar).
+const PRAZO_EM_HORAS: Record<Prioridade, number> = { URGENTE: 4, ALTA: 24, MEDIA: 72, BAIXA: 168 };
 
 export class ChamadoService {
   constructor(
     private repository: ChamadoRepository,
-    private usuarioRepository: UsuarioRepository
+    private setorRepository: SetorRepository,
+    private categoriaRepository: CategoriaRepository
   ) {}
 
-  listarTodos(): ChamadoDetalhado[] {
-    return this.repository.listar().map((c) => ({
-      ...c,
-      solicitante: this.usuarioRepository.buscarPorId(c.usuarioId)?.nome ?? "Desconhecido",
-    }));
+  listarTodos(): Promise<ChamadoDetalhado[]> {
+    return this.repository.listar();
   }
 
-  listarDoUsuario(usuarioId: number): Chamado[] {
+  listarDoUsuario(usuarioId: number): Promise<ChamadoDetalhado[]> {
     return this.repository.listarPorUsuario(usuarioId);
   }
 
-  criar(dados: NovoChamado, usuarioId: number): Chamado {
+  async criar(dados: NovoChamado, usuarioId: number): Promise<Chamado> {
+    const titulo = dados.titulo.trim();
     const descricao = dados.descricao.trim();
-    const setor = dados.setor.trim();
-    const prioridade = dados.prioridade ?? "Média";
+    const prioridade = dados.prioridade ?? "MEDIA";
 
+    if (!titulo) throw new ErroDeValidacao("O título do chamado é obrigatório.");
     if (!descricao) throw new ErroDeValidacao("A descrição do chamado é obrigatória.");
-    if (!setor) throw new ErroDeValidacao("O setor é obrigatório.");
     if (!this.prioridadeValida(prioridade)) {
       throw new ErroDeValidacao(`Prioridade inválida. Use: ${PRIORIDADES.join(", ")}.`);
     }
+    if (!(await this.setorRepository.buscarPorId(dados.setorId))) {
+      throw new ErroDeValidacao("Setor inválido.");
+    }
+    if (!(await this.categoriaRepository.buscarPorId(dados.categoriaId))) {
+      throw new ErroDeValidacao("Categoria inválida.");
+    }
+
+    const agora = new Date();
+    const prazo = new Date(agora.getTime() + PRAZO_EM_HORAS[prioridade] * 60 * 60 * 1000);
 
     const chamado = new Chamado(
-      descricao,
-      this.repository.proximoId(),
-      prioridade,
-      new Date(),
-      setor,
-      usuarioId
+      0, // o id real é gerado pelo banco no salvar()
+      titulo, descricao, prioridade, "ABERTO", agora, prazo,
+      dados.setorId, dados.categoriaId, usuarioId
     );
 
     return this.repository.salvar(chamado);
   }
 
   /** Sem usuarioId = todos os chamados (administrador); com usuarioId = só os dele. */
-  resumo(usuarioId?: number): ResumoChamados {
+  async resumo(usuarioId?: number): Promise<ResumoChamados> {
     const chamados = usuarioId === undefined
-      ? this.repository.listar()
-      : this.repository.listarPorUsuario(usuarioId);
-    const contar = (fn: (c: Chamado) => boolean) => chamados.filter(fn).length;
+      ? await this.repository.listar()
+      : await this.repository.listarPorUsuario(usuarioId);
+    const contar = (fn: (c: ChamadoDetalhado) => boolean) => chamados.filter(fn).length;
 
     return {
       total: chamados.length,
-      abertos: contar((c) => c.status === "Aberto"),
-      emAndamento: contar((c) => c.status === "Em andamento"),
-      concluidos: contar((c) => c.status === "Concluído"),
+      abertos: contar((c) => c.status === "ABERTO"),
+      emAtendimento: contar((c) => c.status === "EM_ATENDIMENTO"),
+      aguardandoPeca: contar((c) => c.status === "AGUARDANDO_PECA"),
+      concluidos: contar((c) => c.status === "CONCLUIDO"),
       porPrioridade: {
-        Alta: contar((c) => c.prioridade === "Alta"),
-        Média: contar((c) => c.prioridade === "Média"),
-        Baixa: contar((c) => c.prioridade === "Baixa"),
+        URGENTE: contar((c) => c.prioridade === "URGENTE"),
+        ALTA: contar((c) => c.prioridade === "ALTA"),
+        MEDIA: contar((c) => c.prioridade === "MEDIA"),
+        BAIXA: contar((c) => c.prioridade === "BAIXA"),
       },
     };
   }

@@ -3,14 +3,14 @@ import type { AuthService } from "../services/authService.js";
 import { ErroNaoAutorizado, ErroProibido } from "../errors.js";
 
 export function exigirLogin(authService: AuthService) {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const cabecalho = req.header("Authorization") ?? "";
       const [tipo, token] = cabecalho.split(" ");
       if (tipo !== "Bearer" || !token) {
         throw new ErroNaoAutorizado("Faça login para continuar.");
       }
-      const { id, perfil } = authService.validarToken(token);
+      const { id, perfil } = await authService.validarToken(token);
       res.locals.usuarioId = id;
       res.locals.perfil = perfil;
       next();

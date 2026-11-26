@@ -14,7 +14,7 @@ export async function renderVisaoGeral(pagina: HTMLElement): Promise<void> {
 
       <section class="cards">
         <article class="card"><p class="card-titulo">Total de chamados</p><p class="card-numero">${resumo.total}</p><p class="card-detalhe">Solicitações registradas</p></article>
-        <article class="card"><p class="card-titulo">Em aberto</p><p class="card-numero">${resumo.abertos + resumo.emAndamento}</p><p class="card-detalhe">Precisam de atenção</p></article>
+        <article class="card"><p class="card-titulo">Em aberto</p><p class="card-numero">${resumo.total - resumo.concluidos}</p><p class="card-detalhe">Precisam de atenção</p></article>
         <article class="card"><p class="card-titulo">Concluídos</p><p class="card-numero">${resumo.concluidos}</p><p class="card-detalhe">Serviços finalizados</p></article>
       </section>
 

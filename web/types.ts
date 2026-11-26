@@ -1,7 +1,7 @@
 // Formato dos dados que a API devolve (o frontend não importa nada do servidor).
-export type Prioridade = "Baixa" | "Média" | "Alta";
-export type StatusChamado = "Aberto" | "Em andamento" | "Concluído";
-
+// Os valores de Prioridade e StatusChamado são os mesmos ENUMs do banco.
+export type Prioridade = "BAIXA" | "MEDIA" | "ALTA" | "URGENTE";
+export type StatusChamado = "ABERTO" | "EM_ATENDIMENTO" | "AGUARDANDO_PECA" | "CONCLUIDO";
 export type Perfil = "admin" | "usuario";
 
 export interface Usuario {
@@ -9,28 +9,33 @@ export interface Usuario {
   perfil: Perfil;
   nome: string;
   email: string;
-  telefone: number;
+  telefone: string;
 }
 
 export interface Chamado {
   id: number;
+  titulo: string;
   descricao: string;
-  setor: string;
   prioridade: Prioridade;
   status: StatusChamado;
   data_abertura: string; // ISO 8601
+  prazo: string;         // ISO 8601
   usuarioId: number;
+  setor: string;         // nome do setor
+  categoria: string;     // nome da categoria
+  solicitante: string;   // nome de quem abriu
 }
 
-/** Chamado com o nome de quem abriu (só o administrador recebe). */
-export interface ChamadoDetalhado extends Chamado {
-  solicitante: string;
+export interface OpcaoLista {
+  id: number;
+  nome: string;
 }
 
 export interface ResumoChamados {
   total: number;
   abertos: number;
-  emAndamento: number;
+  emAtendimento: number;
+  aguardandoPeca: number;
   concluidos: number;
   porPrioridade: Record<Prioridade, number>;
 }

@@ -12,16 +12,17 @@ export async function renderRelatorios(pagina: HTMLElement): Promise<void> {
 
       <section class="cards">
         <article class="card"><p class="card-titulo">Total Registrado</p><p class="card-numero">${r.total}</p><p class="card-detalhe">Chamados no sistema</p></article>
-        <article class="card"><p class="card-titulo">Alta Prioridade</p><p class="card-numero">${r.porPrioridade.Alta}</p><p class="card-detalhe">Requerem atenção urgente</p></article>
+        <article class="card"><p class="card-titulo">Alta e Urgente</p><p class="card-numero">${r.porPrioridade.ALTA + r.porPrioridade.URGENTE}</p><p class="card-detalhe">Requerem atenção urgente</p></article>
       </section>
 
       <h2 class="secao-titulo">Resumo por Prioridade</h2>
       <table class="tabela">
         <thead><tr><th>Prioridade</th><th>Quantidade</th></tr></thead>
         <tbody>
-          <tr><td>Alta</td><td>${r.porPrioridade.Alta}</td></tr>
-          <tr><td>Média</td><td>${r.porPrioridade.Média}</td></tr>
-          <tr><td>Baixa</td><td>${r.porPrioridade.Baixa}</td></tr>
+          <tr><td>Urgente</td><td>${r.porPrioridade.URGENTE}</td></tr>
+          <tr><td>Alta</td><td>${r.porPrioridade.ALTA}</td></tr>
+          <tr><td>Média</td><td>${r.porPrioridade.MEDIA}</td></tr>
+          <tr><td>Baixa</td><td>${r.porPrioridade.BAIXA}</td></tr>
         </tbody>
       </table>`;
   } catch (erro) {

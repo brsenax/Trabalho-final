@@ -1,14 +1,13 @@
-import type { Chamado } from "../entities/chamado.js";
+import type { Chamado, ChamadoDetalhado } from "../entities/chamado.js";
 
 /**
- * Contrato de persistência dos chamados.
- * O Service depende só desta interface; hoje há uma implementação em memória
- * e, no futuro, pode haver uma em MySQL sem mexer no Service.
+ * Contrato de persistência dos chamados. Toda operação é assíncrona (Promise)
+ * porque o banco responde depois; o Service usa `await`.
  */
 export interface ChamadoRepository {
-  proximoId(): number;
-  salvar(chamado: Chamado): Chamado;
-  listar(): Chamado[];
-  listarPorUsuario(usuarioId: number): Chamado[];
-  buscarPorId(id: number): Chamado | undefined;
+  /** Grava o chamado e devolve a entidade com o `id` gerado pelo banco. */
+  salvar(chamado: Chamado): Promise<Chamado>;
+  listar(): Promise<ChamadoDetalhado[]>;
+  listarPorUsuario(usuarioId: number): Promise<ChamadoDetalhado[]>;
+  buscarPorId(id: number): Promise<ChamadoDetalhado | undefined>;
 }

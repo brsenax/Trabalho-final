@@ -1,34 +1,43 @@
-export const PRIORIDADES = ["Baixa", "Média", "Alta"] as const;
+export const PRIORIDADES = ["BAIXA", "MEDIA", "ALTA", "URGENTE"] as const;
 export type Prioridade = (typeof PRIORIDADES)[number];
 
-export const STATUS = ["Aberto", "Em andamento", "Concluído"] as const;
+export const STATUS = ["ABERTO", "EM_ATENDIMENTO", "AGUARDANDO_PECA", "CONCLUIDO"] as const;
 export type StatusChamado = (typeof STATUS)[number];
 
 export class Chamado {
-  descricao: string;
   id: number;
+  titulo: string;
+  descricao: string;
   prioridade: Prioridade;
-  data_abertura: Date;
-  setor: string;
-  usuarioId: number;
   status: StatusChamado;
+  data_abertura: Date;
+  prazo: Date;
+  setorId: number;
+  categoriaId: number;
+  usuarioId: number;
 
   constructor(
-    descricao: string,
     id: number,
+    titulo: string,
+    descricao: string,
     prioridade: Prioridade,
+    status: StatusChamado,
     data_abertura: Date,
-    setor: string,
-    usuarioId: number,
-    status: StatusChamado = "Aberto"
+    prazo: Date,
+    setorId: number,
+    categoriaId: number,
+    usuarioId: number
   ) {
-    this.descricao = descricao;
     this.id = id;
+    this.titulo = titulo;
+    this.descricao = descricao;
     this.prioridade = prioridade;
-    this.data_abertura = data_abertura;
-    this.setor = setor;
-    this.usuarioId = usuarioId;
     this.status = status;
+    this.data_abertura = data_abertura;
+    this.prazo = prazo;
+    this.setorId = setorId;
+    this.categoriaId = categoriaId;
+    this.usuarioId = usuarioId;
   }
 
   alterarPrioridade(novaPrioridade: Prioridade): void {
@@ -42,4 +51,19 @@ export class Chamado {
     const ano = data.getFullYear();
     return `${dia}/${mes}/${ano}`;
   }
+}
+
+/** Chamado já com os nomes vindos dos JOINs (setor, categoria e quem abriu). É o que as telas consomem. */
+export interface ChamadoDetalhado {
+  id: number;
+  titulo: string;
+  descricao: string;
+  prioridade: Prioridade;
+  status: StatusChamado;
+  data_abertura: Date;
+  prazo: Date;
+  usuarioId: number;
+  setor: string;
+  categoria: string;
+  solicitante: string;
 }

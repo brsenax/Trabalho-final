@@ -1,7 +1,23 @@
 import { criarChamado } from "../clients/chamadoApi";
-import type { Prioridade } from "../types";
+import { listarCategorias, listarSetores } from "../clients/catalogoApi";
+import { esc, mostrarErro } from "./helpers";
+import { ROTULO_PRIORIDADE } from "../rotulos";
+import type { OpcaoLista, Prioridade } from "../types";
 
-export function renderAbrirChamado(pagina: HTMLElement): void {
+const opcoes = (lista: OpcaoLista[]) =>
+  lista.map((o) => `<option value="${o.id}">${esc(o.nome)}</option>`).join("");
+
+export async function renderAbrirChamado(pagina: HTMLElement): Promise<void> {
+  pagina.innerHTML = `<p>Carregando...</p>`;
+
+  // Setores e categorias vêm do banco, para o formulário nunca ter uma opção que não existe.
+  let setores: OpcaoLista[], categorias: OpcaoLista[];
+  try {
+    [setores, categorias] = await Promise.all([listarSetores(), listarCategorias()]);
+  } catch (erro) {
+    return mostrarErro(pagina, erro);
+  }
+
   pagina.innerHTML = `
     <h1>Abrir Chamado</h1>
     <p class="descricao">Preencha os dados abaixo para registrar uma nova solicitação de manutenção.</p>
@@ -9,19 +25,26 @@ export function renderAbrirChamado(pagina: HTMLElement): void {
     <div class="login-card" style="max-width:600px;margin:0;">
       <form id="form-chamado">
         <div class="form-group">
-          <label for="problema">Descrição do Problema</label>
-          <input type="text" id="problema" placeholder="Ex: Computador não liga / Impressora sem papel" required />
+          <label for="titulo">Título</label>
+          <input type="text" id="titulo" maxlength="120" placeholder="Ex: Computador não liga" required />
+        </div>
+        <div class="form-group">
+          <label for="descricao">Descrição do problema</label>
+          <textarea id="descricao" rows="4" placeholder="Descreva o que está acontecendo" required></textarea>
         </div>
         <div class="form-group">
           <label for="setor">Setor</label>
-          <input type="text" id="setor" placeholder="Ex: Administrativo, Financeiro, Recepção" required />
+          <select id="setor" required><option value="">Selecione...</option>${opcoes(setores)}</select>
+        </div>
+        <div class="form-group">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" required><option value="">Selecione...</option>${opcoes(categorias)}</select>
         </div>
         <div class="form-group">
           <label for="prioridade">Prioridade</label>
           <select id="prioridade">
-            <option value="Baixa">Baixa</option>
-            <option value="Média" selected>Média</option>
-            <option value="Alta">Alta</option>
+            ${(Object.keys(ROTULO_PRIORIDADE) as Prioridade[])
+              .map((p) => `<option value="${p}" ${p === "MEDIA" ? "selected" : ""}>${ROTULO_PRIORIDADE[p]}</option>`).join("")}
           </select>
         </div>
         <button type="submit" class="btn-primary">Cadastrar Chamado</button>
@@ -31,16 +54,18 @@ export function renderAbrirChamado(pagina: HTMLElement): void {
 
   const form = pagina.querySelector<HTMLFormElement>("#form-chamado")!;
   const feedback = pagina.querySelector<HTMLElement>("#mensagem-feedback")!;
-  const campo = (id: string) => pagina.querySelector<HTMLInputElement | HTMLSelectElement>(`#${id}`)!;
+  const campo = (id: string) => pagina.querySelector<HTMLInputElement>(`#${id}`)!;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     try {
-      // O frontend só envia os dados; quem valida, numera e guarda é o servidor.
+      // O frontend só envia os dados; quem valida, calcula o prazo e grava é o servidor.
       const { mensagem } = await criarChamado({
-        descricao: campo("problema").value,
-        setor: campo("setor").value,
+        titulo: campo("titulo").value,
+        descricao: campo("descricao").value,
+        setorId: Number(campo("setor").value),
+        categoriaId: Number(campo("categoria").value),
         prioridade: campo("prioridade").value as Prioridade,
       });
       feedback.style.color = "#16a34a";

@@ -4,12 +4,12 @@ export type Perfil = (typeof PERFIS)[number];
 export class User {
     id_user: number;
     nome: string;
-    telefone: number;
+    telefone: string;
     email: string;
     senha?: string; 
     perfil: Perfil;
 
-    constructor(id_user: number, nome: string, telefone: number, email: string, senha?: string, perfil: Perfil = "usuario") {
+    constructor(id_user: number, nome: string, telefone: string, email: string, senha?: string, perfil: Perfil = "usuario") {
         this.id_user = id_user;
         this.nome = nome;
         this.telefone = telefone;

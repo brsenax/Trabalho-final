@@ -15,8 +15,8 @@ export interface SessaoAutenticada {
 export class AuthService {
   constructor(private usuarioRepository: UsuarioRepository) {}
 
-  autenticar(email: string, senha: string): SessaoAutenticada {
-    const usuario = this.usuarioRepository.buscarPorEmail(email.trim());
+  async autenticar(email: string, senha: string): Promise<SessaoAutenticada> {
+    const usuario = await this.usuarioRepository.buscarPorEmail(email.trim());
 
     if (!usuario || !usuario.validarSenha(senha)) {
       throw new ErroNaoAutorizado("Usuário ou senha inválidos.");
@@ -30,11 +30,11 @@ export class AuthService {
   }
 
   /** Retorna quem é o dono do token (o perfil vem do repositório, não do token), ou lança ErroNaoAutorizado. */
-  validarToken(token: string): { id: number; perfil: Perfil } {
+  async validarToken(token: string): Promise<{ id: number; perfil: Perfil }> {
     try {
       const payload = jwt.verify(token, JWT_SECRET);
       const id = Number(typeof payload === "string" ? NaN : payload.sub);
-      const usuario = Number.isInteger(id) ? this.usuarioRepository.buscarPorId(id) : undefined;
+      const usuario = Number.isInteger(id) ? await this.usuarioRepository.buscarPorId(id) : undefined;
       if (!usuario) {
         throw new Error("usuário do token não existe");
       }
@@ -44,18 +44,18 @@ export class AuthService {
     }
   }
 
-  redefinirSenha(email: string, novaSenha: string): void {
+  async redefinirSenha(email: string, novaSenha: string): Promise<void> {
     if (!novaSenha) {
       throw new ErroDeValidacao("A nova senha é obrigatória.");
     }
 
-    const usuario = this.usuarioRepository.buscarPorEmail(email.trim());
+    const usuario =  await this.usuarioRepository.buscarPorEmail(email.trim());
     if (!usuario) {
       throw new ErroNaoEncontrado("Usuário não encontrado com este e-mail.");
     }
 
     usuario.senha = novaSenha;
-    this.usuarioRepository.atualizar(usuario);
+    await this.usuarioRepository.atualizar(usuario);
   }
 
   private paraPublico(u: User): UsuarioPublico {
