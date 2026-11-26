@@ -8,14 +8,16 @@ export class User {
     email: string;
     senha?: string; 
     perfil: Perfil;
+    setorId: number | null;
 
-    constructor(id_user: number, nome: string, telefone: string, email: string, senha?: string, perfil: Perfil = "usuario") {
+    constructor(id_user: number, nome: string, telefone: string, email: string, senha?: string, perfil: Perfil = "usuario", setorId: number | null = null) {
         this.id_user = id_user;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
         this.senha = senha;
         this.perfil = perfil;
+        this.setorId = setorId;
     }
 
     validarSenha(senhaInformada: string) : boolean {

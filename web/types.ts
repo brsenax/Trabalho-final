@@ -12,6 +12,16 @@ export interface Usuario {
   telefone: string;
 }
 
+/** Usuário como o administrador o vê na tela de gerenciamento (a senha nunca vem da API). */
+export interface UsuarioGerenciado {
+  id_user: number;
+  nome: string;
+  email: string;
+  telefone: string;
+  perfil: Perfil;
+  setorId: number | null;
+}
+
 export interface Chamado {
   id: number;
   titulo: string;

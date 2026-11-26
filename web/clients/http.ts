@@ -7,7 +7,7 @@ export class ApiError extends Error {
 }
 
 interface Opcoes {
-  metodo?: "GET" | "POST";
+  metodo?: "GET" | "POST" | "PUT" | "DELETE";
   corpo?: unknown;
 }
 
